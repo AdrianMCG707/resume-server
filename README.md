@@ -41,7 +41,7 @@ Returns:
   "status": "ok"
 }
 
----
+```
 
 This endpoint verifies that:
 
