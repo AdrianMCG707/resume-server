@@ -33,3 +33,20 @@ Returns:
 {
   "status": "ok"
 }
+
+How It Works
+Spring Boot auto-configures the application.
+Embedded Tomcat runs on port 8080.
+The DispatcherServlet routes HTTP requests.
+The PingController handles /ping.
+The response is serialized to JSON using Jackson.
+Run Locally
+mvn spring-boot:run
+Then visit:
+http://localhost:8080/ping
+Project Status
+✔ Step 1 Complete — Application bootstrapped and REST endpoint verified
+⬜ Step 2 — PostgreSQL + Flyway migrations
+⬜ Step 3 — Domain models + repository layer
+⬜ Step 4 — JWT authentication
+⬜ Step 5 — Deployment
