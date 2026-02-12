@@ -66,3 +66,15 @@ This endpoint verifies that:
 
 ```bash
 mvn spring-boot:run
+
+## Then visit:
+```bash
+http://localhost:8080/ping
+
+
+Project Status
+✔ Step 1 — Application bootstrapped and REST endpoint verified
+⬜ Step 2 — PostgreSQL integration + Flyway migrations
+⬜ Step 3 — Domain models + repository layer
+⬜ Step 4 — JWT authentication + Spring Security
+⬜ Step 5 — Dockerization + Cloud deployment
