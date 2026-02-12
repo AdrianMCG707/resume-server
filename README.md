@@ -40,3 +40,27 @@ Returns:
 {
   "status": "ok"
 }
+
+This endpoint verifies that:
+
+- The server is running
+- The embedded Tomcat instance is active
+- The Spring DispatcherServlet is routing correctly
+- JSON serialization is functioning
+
+---
+
+## How It Works
+
+1. Spring Boot initializes the application context.
+2. Embedded Tomcat starts on port 8080.
+3. The `DispatcherServlet` routes incoming HTTP requests.
+4. The `PingController` handles the `/ping` endpoint.
+5. Jackson serializes the Java response object into JSON.
+
+---
+
+## Run Locally
+
+```bash
+mvn spring-boot:run
