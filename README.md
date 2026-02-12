@@ -74,8 +74,8 @@ http://localhost:8080/ping
 ```
 
 ## Project Status
-✔ Step 1 — Application bootstrapped and REST endpoint verified
-⬜ Step 2 — PostgreSQL integration + Flyway migrations
-⬜ Step 3 — Domain models + repository layer
-⬜ Step 4 — JWT authentication + Spring Security
-⬜ Step 5 — Dockerization + Cloud deployment
+1. ✔ Step 1 — Application bootstrapped and REST endpoint verified
+2. ⬜ Step 2 — PostgreSQL integration + Flyway migrations
+3. ⬜ Step 3 — Domain models + repository layer
+4. ⬜ Step 4 — JWT authentication + Spring Security
+5. ⬜ Step 5 — Dockerization + Cloud deployment
