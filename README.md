@@ -34,6 +34,7 @@ Returns:
   "status": "ok"
 }
 
+--
 How It Works
 Spring Boot auto-configures the application.
 Embedded Tomcat runs on port 8080.
