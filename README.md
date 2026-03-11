@@ -9,7 +9,7 @@ This project demonstrates backend engineering fundamentals including REST API de
 ## Tech Stack
 
 - Java 21
-- Spring Boot 4
+- Spring Boot 3.x
 - Spring Web (REST)
 - Spring Data JPA
 - H2 (in-memory database for development)
