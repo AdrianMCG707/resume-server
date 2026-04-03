@@ -1,81 +1,125 @@
 # Resume Server
 
-A Spring Boot REST API built using Java 21 and Spring Boot 4.
-
-This project demonstrates backend engineering fundamentals including REST API development, JSON serialization, embedded server configuration, and database integration.
+A production-style REST API backend that stores and serves resume data through
+HTTP endpoints. Built to simulate how real backend systems work — data lives in
+a database and is exposed through REST APIs rather than a static file.
 
 ---
 
 ## Tech Stack
 
+| Technology | Purpose |
+|---|---|
+| Java 21 | Programming language |
+| Spring Boot 3.4.1 | Backend framework + embedded Tomcat |
+| Spring Data JPA / Hibernate | Database ORM layer |
+| PostgreSQL 16 | Production database |
+| Flyway | Database migration versioning |
+| Docker + Docker Compose | Local database container |
+| SpringDoc OpenAPI (Swagger) | Auto-generated API documentation |
+| Spring Boot Actuator | Health check endpoint |
+| Maven | Build tool and dependency management |
+
+---
+
+## Architecture
+```
+HTTP Request
+    ↓
+NoteController  (REST layer — handles HTTP)
+    ↓
+NoteService     (Business logic layer)
+    ↓
+NoteRepository  (Data access layer — Spring Data JPA)
+    ↓
+PostgreSQL      (Running in Docker)
+```
+
+---
+
+## Running Locally
+
+### Prerequisites
 - Java 21
-- Spring Boot 3.x
-- Spring Web (REST)
-- Spring Data JPA
-- H2 (in-memory database for development)
-- Maven
+- Docker Desktop
+- Maven (or use the included `./mvnw` wrapper)
 
----
+### Step 1 — Start the database
+```bash
+docker compose up -d
+```
 
-## Architecture Overview
+### Step 2 — Start the server
+```bash
+./mvnw spring-boot:run
+```
 
-This project follows a layered backend structure:
+### Step 3 — Verify it's running
+Visit: `http://localhost:8080/actuator/health`
 
-- **Controller Layer** – Handles HTTP requests
-- **Service Layer** – (Planned) Business logic
-- **Repository Layer** – (Planned) Database interaction
-- **Database** – H2 (development), PostgreSQL (planned)
-
-Spring Boot auto-configures the application and runs an embedded Tomcat server on port 8080.
-
----
-
-## Current Endpoints
-
-### GET /ping
-
-Returns:
-
+Expected response:
 ```json
 {
-  "status": "ok"
+  "status": "UP",
+  "components": {
+    "db": {
+      "status": "UP"
+    }
+  }
 }
-
 ```
-
-This endpoint verifies that:
-
-- The server is running
-- The embedded Tomcat instance is active
-- The Spring DispatcherServlet is routing correctly
-- JSON serialization is functioning
 
 ---
 
-## How It Works
+## API Documentation
 
-1. Spring Boot initializes the application context.
-2. Embedded Tomcat starts on port 8080.
-3. The `DispatcherServlet` routes incoming HTTP requests.
-4. The `PingController` handles the `/ping` endpoint.
-5. Jackson serializes the Java response object into JSON.
+Swagger UI is available at:
+```
+http://localhost:8080/swagger-ui/index.html
+```
 
 ---
 
-## Run Locally
+## Endpoints
 
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /ping | Server health check |
+| GET | /notes | Returns all notes |
+| POST | /notes | Creates a new note |
+| GET | /actuator/health | Database health status |
+
+---
+
+## Database Migrations
+
+Managed by Flyway — migrations run automatically on startup:
+
+| Version | File | Description |
+|---|---|---|
+| V1 | V1__init.sql | Creates the notes table |
+| V2 | V2__seed_data.sql | Inserts sample demo data |
+
+---
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and fill in your values:
 ```bash
-mvn spring-boot:run
+cp .env.example .env
 ```
 
-## Then visit:
-```bash
-http://localhost:8080/ping
-```
+---
 
 ## Project Status
-1. ✔ Step 1 — Application bootstrapped and REST endpoint verified
-2. ⬜ Step 2 — PostgreSQL integration + Flyway migrations
-3. ⬜ Step 3 — Domain models + repository layer
-4. ⬜ Step 4 — JWT authentication + Spring Security
-5. ⬜ Step 5 — Dockerization + Cloud deployment
+
+- ✅ Step 1 — Server bootstrapped, /ping endpoint working
+- ✅ Step 2 — PostgreSQL, Flyway, JPA, full CRUD for notes, tests passing
+- ✅ Step 3 — Health endpoint, seed data, Docker setup documented
+- ⬜ Step 4 — Full resume data model (ERD + all entities)
+- ⬜ Step 5 — Complete CRUD APIs for all resume entities
+- ⬜ Step 6 — JWT Authentication + Spring Security
+- ⬜ Step 7 — Standout feature (Audit Logging)
+- ⬜ Step 8 — Testing + quality pass
+- ⬜ Step 9 — Productionize with Docker
+- ⬜ Step 10 — Deploy to cloud (Render/Railway)
