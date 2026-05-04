@@ -14,9 +14,12 @@ import java.util.stream.Collectors;
 public class SkillService {
 
     private final SkillRepository skillRepository;
+    private final AuditLogService auditLogService;  // ← NEW
 
-    public SkillService(SkillRepository skillRepository) {
+    public SkillService(SkillRepository skillRepository,
+                        AuditLogService auditLogService) {  // ← NEW
         this.skillRepository = skillRepository;
+        this.auditLogService = auditLogService;  // ← NEW
     }
 
     public List<SkillResponseDto> getSkillsByUserId(Long userId) {
@@ -32,7 +35,9 @@ public class SkillService {
         skill.setName(dto.getName());
         skill.setCategory(dto.getCategory());
         skill.setProficiency(dto.getProficiency());
-        return toResponseDto(skillRepository.save(skill));
+        SkillResponseDto result = toResponseDto(skillRepository.save(skill));  // ← CHANGED
+        auditLogService.log("CREATE", "Skill", result.getId());  // ← NEW
+        return result;  // ← CHANGED
     }
 
     public Optional<SkillResponseDto> getSkillById(Long id) {
@@ -44,13 +49,16 @@ public class SkillService {
             skill.setName(dto.getName());
             skill.setCategory(dto.getCategory());
             skill.setProficiency(dto.getProficiency());
-            return toResponseDto(skillRepository.save(skill));
+            SkillResponseDto result = toResponseDto(skillRepository.save(skill));  // ← CHANGED
+            auditLogService.log("UPDATE", "Skill", result.getId());  // ← NEW
+            return result;  // ← CHANGED
         });
     }
 
     public boolean deleteSkill(Long id) {
         if (skillRepository.existsById(id)) {
             skillRepository.deleteById(id);
+            auditLogService.log("DELETE", "Skill", id);  // ← NEW
             return true;
         }
         return false;

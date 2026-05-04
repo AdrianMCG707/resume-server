@@ -14,9 +14,12 @@ import java.util.stream.Collectors;
 public class ExperienceService {
 
     private final ExperienceRepository experienceRepository;
+    private final AuditLogService auditLogService;  // ← NEW
 
-    public ExperienceService(ExperienceRepository experienceRepository) {
+    public ExperienceService(ExperienceRepository experienceRepository,
+                             AuditLogService auditLogService) {  // ← NEW
         this.experienceRepository = experienceRepository;
+        this.auditLogService = auditLogService;  // ← NEW
     }
 
     public List<ExperienceResponseDto> getExperienceByUserId(Long userId) {
@@ -34,7 +37,9 @@ public class ExperienceService {
         experience.setStartDate(dto.getStartDate());
         experience.setEndDate(dto.getEndDate());
         experience.setDescription(dto.getDescription());
-        return toResponseDto(experienceRepository.save(experience));
+        ExperienceResponseDto result = toResponseDto(experienceRepository.save(experience));  // ← CHANGED
+        auditLogService.log("CREATE", "Experience", result.getId());  // ← NEW
+        return result;  // ← CHANGED
     }
 
     public Optional<ExperienceResponseDto> getExperienceById(Long id) {
@@ -48,13 +53,16 @@ public class ExperienceService {
             experience.setStartDate(dto.getStartDate());
             experience.setEndDate(dto.getEndDate());
             experience.setDescription(dto.getDescription());
-            return toResponseDto(experienceRepository.save(experience));
+            ExperienceResponseDto result = toResponseDto(experienceRepository.save(experience));  // ← CHANGED
+            auditLogService.log("UPDATE", "Experience", result.getId());  // ← NEW
+            return result;  // ← CHANGED
         });
     }
 
     public boolean deleteExperience(Long id) {
         if (experienceRepository.existsById(id)) {
             experienceRepository.deleteById(id);
+            auditLogService.log("DELETE", "Experience", id);  // ← NEW
             return true;
         }
         return false;

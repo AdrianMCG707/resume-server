@@ -14,9 +14,12 @@ import java.util.stream.Collectors;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final AuditLogService auditLogService;  // ← NEW
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository,
+                          AuditLogService auditLogService) {  // ← NEW
         this.projectRepository = projectRepository;
+        this.auditLogService = auditLogService;  // ← NEW
     }
 
     public List<ProjectResponseDto> getProjectsByUserId(Long userId) {
@@ -34,7 +37,9 @@ public class ProjectService {
         project.setTechStack(dto.getTechStack());
         project.setGithubUrl(dto.getGithubUrl());
         project.setLiveUrl(dto.getLiveUrl());
-        return toResponseDto(projectRepository.save(project));
+        ProjectResponseDto result = toResponseDto(projectRepository.save(project));  // ← CHANGED
+        auditLogService.log("CREATE", "Project", result.getId());  // ← NEW
+        return result;  // ← CHANGED
     }
 
     public Optional<ProjectResponseDto> getProjectById(Long id) {
@@ -48,13 +53,16 @@ public class ProjectService {
             project.setTechStack(dto.getTechStack());
             project.setGithubUrl(dto.getGithubUrl());
             project.setLiveUrl(dto.getLiveUrl());
-            return toResponseDto(projectRepository.save(project));
+            ProjectResponseDto result = toResponseDto(projectRepository.save(project));  // ← CHANGED
+            auditLogService.log("UPDATE", "Project", result.getId());  // ← NEW
+            return result;  // ← CHANGED
         });
     }
 
     public boolean deleteProject(Long id) {
         if (projectRepository.existsById(id)) {
             projectRepository.deleteById(id);
+            auditLogService.log("DELETE", "Project", id);  // ← NEW
             return true;
         }
         return false;

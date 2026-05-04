@@ -12,9 +12,12 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AuditLogService auditLogService;  // ← NEW
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,
+                       AuditLogService auditLogService) {  // ← NEW
         this.userRepository = userRepository;
+        this.auditLogService = auditLogService;  // ← NEW
     }
 
     public UserResponseDto createUser(UserRequestDto dto) {
@@ -25,6 +28,7 @@ public class UserService {
         user.setLocation(dto.getLocation());
         user.setSummary(dto.getSummary());
         User saved = userRepository.save(user);
+        auditLogService.log("CREATE", "User", saved.getId());  // ← NEW
         return toResponseDto(saved);
     }
 
@@ -39,7 +43,9 @@ public class UserService {
             user.setTitle(dto.getTitle());
             user.setLocation(dto.getLocation());
             user.setSummary(dto.getSummary());
-            return toResponseDto(userRepository.save(user));
+            UserResponseDto result = toResponseDto(userRepository.save(user));  // ← CHANGED
+            auditLogService.log("UPDATE", "User", result.getId());  // ← NEW
+            return result;  // ← CHANGED
         });
     }
 
