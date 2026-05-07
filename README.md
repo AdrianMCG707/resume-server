@@ -116,10 +116,10 @@ cp .env.example .env
 - ✅ Step 1 — Server bootstrapped, /ping endpoint working
 - ✅ Step 2 — PostgreSQL, Flyway, JPA, full CRUD for notes, tests passing
 - ✅ Step 3 — Health endpoint, seed data, Docker setup documented
-- ⬜ Step 4 — Full resume data model (ERD + all entities)
-- ⬜ Step 5 — Complete CRUD APIs for all resume entities
-- ⬜ Step 6 — JWT Authentication + Spring Security
-- ⬜ Step 7 — Standout feature (Audit Logging)
-- ⬜ Step 8 — Testing + quality pass
-- ⬜ Step 9 — Productionize with Docker
+- ✅ Step 4 — Full resume data model (ERD + all entities)
+- ✅ Step 5 — Complete CRUD APIs for all resume entities
+- ✅ Step 6 — JWT Authentication + Spring Security
+- ✅ Step 7 — Standout feature (Audit Logging)
+- ✅ Step 8 — Testing + quality pass (15 tests passing)
+- 🔄 Step 9 — Productionize with Docker (in progress)
 - ⬜ Step 10 — Deploy to cloud (Render/Railway)
