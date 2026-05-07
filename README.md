@@ -37,36 +37,49 @@ PostgreSQL      (Running in Docker)
 
 ---
 
-## Running Locally
-
 ### Prerequisites
-- Java 21
-- Docker Desktop
-- Maven (or use the included `./mvnw` wrapper)
 
-### Step 1 — Start the database
-```bash
-docker compose up -d
-```
+- Docker Desktop (that's it — no Java or Maven needed)
 
-### Step 2 — Start the server
-```bash
-./mvnw spring-boot:run
-```
+---
 
-### Step 3 — Verify it's running
-Visit: `http://localhost:8080/actuator/health`
+### Option A — Run with Docker (Recommended)
 
-Expected response:
-```json
-{
-  "status": "UP",
-  "components": {
-    "db": {
-      "status": "UP"
-    }
-  }
-}
+This runs the full stack — app + database — with one command.
+
+**Step 1 — Clone the repo**
+
+    git clone https://github.com/AdrianMCG707/resume-server.git
+    cd resume-server
+
+**Step 2 — Set up environment variables**
+
+    cp .env.example .env
+
+Open `.env` and fill in your values.
+
+**Step 3 — Start everything**
+
+    docker compose up --build
+
+The first run takes ~3 minutes to download images and compile.
+Subsequent runs take ~10 seconds.
+
+**Step 4 — Verify it's running**
+
+    http://localhost:8080/actuator/health
+    http://localhost:8080/swagger-ui/index.html
+
+**To stop:**
+
+    docker compose down
+
+---
+
+### Option B — Run Locally (Requires Java 21 + Maven)
+
+    docker compose up -d
+    ./mvnw spring-boot:run
 ```
 
 ---
