@@ -82,13 +82,22 @@ http://localhost:8080/swagger-ui/index.html
 
 ## Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | /ping | Server health check |
-| GET | /notes | Returns all notes |
-| POST | /notes | Creates a new note |
-| GET | /actuator/health | Database health status |
-
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | /ping | Server health check | No |
+| GET | /actuator/health | Database health status | No |
+| POST | /auth/register | Create a new account | No |
+| POST | /auth/login | Login and receive JWT token | No |
+| GET | /resume/users | List all users | No |
+| POST | /resume/users | Create a user | Yes |
+| GET | /resume/projects | List all projects | No |
+| POST | /resume/projects | Create a project | Yes |
+| PUT | /resume/projects/{id} | Update a project | Yes |
+| DELETE | /resume/projects/{id} | Delete a project | Yes |
+| GET | /resume/skills | List all skills | No |
+| GET | /resume/experience | List all experience | No |
+| GET | /resume/education | List all education | No |
+| GET | /admin/audit-logs | View audit log | Yes (Admin) |
 ---
 
 ## Database Migrations
