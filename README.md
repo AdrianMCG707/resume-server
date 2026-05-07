@@ -6,6 +6,18 @@ a database and is exposed through REST APIs rather than a static file.
 
 ---
 
+## Live Demo
+
+**Base URL:** https://resume-server-mqgn.onrender.com
+
+| URL | Description |
+|-----|-------------|
+| [/swagger-ui/index.html](https://resume-server-mqgn.onrender.com/swagger-ui/index.html) | Interactive API docs |
+| [/actuator/health](https://resume-server-mqgn.onrender.com/actuator/health) | Health check |
+
+> Note: Hosted on Render free tier — first request after inactivity may take ~50 seconds to wake up.
+
+---
 ## Tech Stack
 
 | Technology | Purpose |
@@ -143,5 +155,5 @@ cp .env.example .env
 - ✅ Step 6 — JWT Authentication + Spring Security
 - ✅ Step 7 — Standout feature (Audit Logging)
 - ✅ Step 8 — Testing + quality pass (15 tests passing)
-- 🔄 Step 9 — Productionize with Docker (in progress)
-- ⬜ Step 10 — Deploy to cloud (Render/Railway)
+- ✅ Step 9 — Productionize with Docker (in progress)
+- 🔄 Step 10 — Deploy to cloud (in progress — live at render)
